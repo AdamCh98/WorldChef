@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
                 //Add something here when we get User ID
 
                 startActivity(intent);
+
+            //this is Lucas making a comment
             }
         });
 
