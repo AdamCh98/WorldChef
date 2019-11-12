@@ -1,6 +1,7 @@
 package com.example.worldchef.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +68,17 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         holder.mCategoryName.setText(currentCategory.getStrCategory());
         String imageUrl = currentCategory.getStrCategoryThumb();
         Glide.with(holder.mCategoryName.getContext()).load(imageUrl).into(holder.mCategoryImage);
+
+
+        //Clicking will transition to another fragment.
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Context context = view.getContext();
+
+
+            }
+        });
     }
 
     @Override
