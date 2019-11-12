@@ -23,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.worldchef.Adapters.CategoryAdapter;
+import com.example.worldchef.AppDatabase;
 import com.example.worldchef.Models.Categories;
 import com.example.worldchef.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -43,7 +44,7 @@ public class LearnFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_learn_fragment, container, false);
+        final View view = inflater.inflate(R.layout.activity_learn_fragment, container, false);
 
 
         categoryRecyclerView = view.findViewById(R.id.learn_rv);
@@ -79,7 +80,7 @@ public class LearnFragment extends Fragment {
         String categoryUrl = "https://www.themealdb.com/api/json/v1/1/categories.php";
 
         Context context = getContext();
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        final RequestQueue requestQueue = Volley.newRequestQueue(context);
 
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
@@ -87,16 +88,22 @@ public class LearnFragment extends Fragment {
                 System.out.println(response);
                 Gson gson = new Gson();
 
-
                 Categories thisCategories = gson.fromJson(response, Categories.class);
 
                 List<Categories.Category> categoryList = thisCategories.getCategories();
 
-                //Add in data
+                //Add this into my database
+                AppDatabase.getInstance(view.getContext()).categoryDao().insertCategoryList(categoryList);
 
-                categoryAdapter.setData(categoryList);
+                //Extract list of categories from database instead
+                List<Categories.Category> categoryListDatabase = AppDatabase.getInstance(view.getContext()).categoryDao().getCategories();
+
+                categoryAdapter.setData(categoryListDatabase);
+
+                //categoryAdapter.setData(categoryList);
 
                 categoryRecyclerView.setAdapter(categoryAdapter);
+                requestQueue.stop();
 
 
             }
@@ -106,6 +113,7 @@ public class LearnFragment extends Fragment {
             @Override
             public void onErrorResponse (VolleyError error) {
                 System.out.println(error.toString());
+                requestQueue.stop();
             }
         };
         StringRequest stringRequest = new StringRequest(Request.Method.GET, categoryUrl, responseListener, errorListener);

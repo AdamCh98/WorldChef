@@ -1,7 +1,9 @@
 package com.example.worldchef.Adapters;
 
+import androidx.fragment.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.worldchef.Activities.MainScreenActivity;
+import com.example.worldchef.Fragments.LearnFragment;
+import com.example.worldchef.Fragments.MealFragment;
 import com.example.worldchef.Models.Categories;
 import com.example.worldchef.R;
 
@@ -22,7 +27,7 @@ import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> implements Filterable {
 
-    //List of countries
+    //List of categories
     public List<Categories.Category> categories;
 
     private List<Categories.Category> categoryListFull;
@@ -43,7 +48,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
         public CategoryViewHolder(View v) {
             super(v);
-
+            view = v;
             mCategoryImage = v.findViewById(R.id.category_cardimage);
             mCategoryName = v.findViewById(R.id.category_name);
 
@@ -74,7 +79,18 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Context context = view.getContext();
+
+                Fragment mealFragment = new MealFragment();
+
+                //Storing the category name in bundle to give it to the mealFragment
+                Bundle bundle = new Bundle();
+                bundle.putString("strCategory", currentCategory.getStrCategory());
+                mealFragment.setArguments(bundle);
+
+                //Transition fragment
+                MainScreenActivity activity = (MainScreenActivity) view.getContext();
+                activity.getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.mainscreen_fragmentA, mealFragment).commit();
 
 
             }

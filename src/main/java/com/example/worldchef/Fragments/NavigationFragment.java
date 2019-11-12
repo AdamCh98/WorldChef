@@ -34,7 +34,7 @@ import java.util.List;
 
 public class NavigationFragment extends Fragment {
 
-
+//Currently navigation fragment isn't even working
 
     public NavigationFragment() {
         // Required empty public constructor
@@ -47,40 +47,36 @@ public class NavigationFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_navigation, container, false);
         BottomNavigationView bottomNav = view.findViewById(R.id.navigation_bar);
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                Fragment selectedFragment = null;
+
+                switch (menuItem.getItemId()) {
+                    case R.id.bottom_navigation_learn:
+                        selectedFragment = new LearnFragment();
+                        break;
+                    case R.id.bottom_navigation_social:
+                        selectedFragment = new MealFragment();
+                        break;
+                    case R.id.bottom_navigation_recipe:
+                        selectedFragment = new LearnFragment();
+                        break;
+                }
+                System.out.println("Successfully switched!");
+
+                //Change Fragment A with whatever is clicked
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.mainscreen_fragmentA,
+                        selectedFragment).commit();
+
+                return true;
+            }
+        });
 
 
         return view;
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                    Fragment selectedFragment = null;
-
-                    switch (menuItem.getItemId()) {
-                        case R.id.bottom_navigation_learn:
-                            selectedFragment = new LearnFragment();
-                            break;
-                        case R.id.bottom_navigation_social:
-                            selectedFragment = new LearnFragment();
-                            break;
-                        case R.id.bottom_navigation_recipe:
-                            selectedFragment = new LearnFragment();
-                            break;
-                    }
-                    System.out.println("Successfully switched!");
-
-                    //Change Fragment A with whatever is clicked
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.mainscreen_fragmentA,
-                            selectedFragment).commit();
-
-                    return true;
-
-
-                }
-
-            };
 
 
 

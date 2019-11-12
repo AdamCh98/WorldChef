@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.CategoryDetailedFragment">
+    tools:context=".Fragments.MealFragment">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+        android:id="@+id/meal_cardview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -45,21 +45,23 @@
     </androidx.cardview.widget.CardView>
 
     <SearchView
-        android:id="@+id/categorydetail_sv"
+        android:id="@+id/meal_sv"
+        android:iconifiedByDefault="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#9CFFC107"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+        app:layout_constraintTop_toBottomOf="@+id/meal_cardview" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/categorydetail_rv"
+        android:id="@+id/meal_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="1dp"
         android:background="#60FFEB3B"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categorydetail_sv" />
+        app:layout_constraintTop_toBottomOf="@+id/meal_sv" />
     <![CDATA[
 
     />

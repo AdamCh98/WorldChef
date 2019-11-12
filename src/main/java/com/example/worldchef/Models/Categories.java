@@ -1,5 +1,9 @@
 package com.example.worldchef.Models;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.List;
 
 public class Categories {
@@ -21,9 +25,12 @@ public class Categories {
         this.categories = categories;
     }
 
-    public class Category {
-
+    @Entity
+    public static class Category {
+        @PrimaryKey
+        @NonNull
        public int idCategory;
+
        public String strCategory;
 
        //This is the URL for the image
