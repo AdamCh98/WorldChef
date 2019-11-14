@@ -46,7 +46,6 @@ public class LearnFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.activity_learn_fragment, container, false);
 
-
         categoryRecyclerView = view.findViewById(R.id.learn_rv);
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         categoryRecyclerView.setLayoutManager(layoutManager);

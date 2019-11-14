@@ -16,15 +16,15 @@ public class User {
     private String email;
 
     //Stars represents the points system
-    private int stars;
+    private int points;
 
-    public User(String username, String password, String firstName, String lastName, String email, int stars) {
+    public User(String username, String password, String firstName, String lastName, String email, int points) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.stars = stars;
+        this.points = points;
     }
 
     public String getEmail() {
@@ -67,11 +67,11 @@ public class User {
         this.password = password;
     }
 
-    public int getStars() {
-        return stars;
+    public int getPoints() {
+        return points;
     }
 
-    public void setStars(int stars) {
-        this.stars = stars;
+    public void setPoints(int points) {
+        this.points = points;
     }
 }

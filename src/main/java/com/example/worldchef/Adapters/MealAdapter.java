@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.worldchef.Activities.MealDetailActivity;
 import com.example.worldchef.Models.Categories;
 import com.example.worldchef.Models.MealsPerCategory;
 import com.example.worldchef.R;
@@ -44,6 +45,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
 
         public MealViewHolder(View v) {
             super(v);
+            view = v;
 
             mMealImage = v.findViewById(R.id.meal_cardimage);
             mMealName = v.findViewById(R.id.meal_name);
@@ -70,16 +72,25 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
         String imageUrl = currentMeal.getStrMealThumb();
         Glide.with(holder.mMealName.getContext()).load(imageUrl).into(holder.mMealImage);
 
+        //Clicking will shift activity
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        //Clicking will transition to another fragment.
-//        holder.view.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Context context = view.getContext();
-//
-//
-//            }
-//        });
+                Context context = view.getContext();
+
+                //Give meal detail the meal name, then start the activity
+                Intent explicitIntent = new Intent(context, MealDetailActivity.class);
+                explicitIntent.putExtra("strMeal", currentMeal.getStrMeal());
+                context.startActivity(explicitIntent);
+
+
+            }
+        });
+
+
+
+
     }
 
     @Override

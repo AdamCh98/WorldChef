@@ -7,18 +7,21 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.worldchef.DAOs.CategoryDao;
+import com.example.worldchef.DAOs.MealDetailDao;
 import com.example.worldchef.DAOs.MealsFromCategoryDao;
 import com.example.worldchef.DAOs.UserDao;
 import com.example.worldchef.Models.Categories;
+import com.example.worldchef.Models.MealDetail;
 import com.example.worldchef.Models.MealsPerCategory;
 import com.example.worldchef.Models.User;
 
-@Database(entities = {User.class, Categories.Category.class, MealsPerCategory.MealFromCategory.class}, version = 1)
+@Database(entities = {User.class, Categories.Category.class, MealsPerCategory.MealFromCategory.class, MealDetail.Meal.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract UserDao userDao();
     public abstract CategoryDao categoryDao();
     public abstract MealsFromCategoryDao mealsFromCategoryDao();
+    public abstract MealDetailDao mealDetailDao();
 
     private static AppDatabase instance;
     public static AppDatabase getInstance(Context context) {

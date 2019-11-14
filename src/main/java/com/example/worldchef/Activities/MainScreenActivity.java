@@ -1,17 +1,22 @@
 package com.example.worldchef.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.worldchef.AppDatabase;
 import com.example.worldchef.Fragments.LearnFragment;
 import com.example.worldchef.Fragments.NavigationFragment;
+import com.example.worldchef.Fragments.SocialFragment;
+import com.example.worldchef.Models.User;
 import com.example.worldchef.R;
 
 public class MainScreenActivity extends AppCompatActivity {
 
     //This is the main screen
+    public static String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +30,18 @@ public class MainScreenActivity extends AppCompatActivity {
         //Have the nav bar
         Fragment fragmentNav = new NavigationFragment();
         swapFragmentB(fragmentNav);
+
+        //Grab intent
+        Intent intent = getIntent();
+
+        username = intent.getStringExtra("username");
+
+//        //give it to social Fragment
+//        Bundle userBundle = new Bundle();
+//        userBundle.putString("username", username);
+//
+//        Fragment socialFragment = new SocialFragment();
+//        socialFragment.setArguments(userBundle);
 
     }
 

@@ -105,12 +105,12 @@ public class MealFragment extends Fragment {
                 //Add this into my database
                 AppDatabase.getInstance(view.getContext()).mealsFromCategoryDao().insertMealList(mealList);
 
-                //Extract list of categories from database instead
+                //Extract list of categories from database instead - need get meals from WHERE category...
                 List<MealsPerCategory.MealFromCategory> mealListDatabase = AppDatabase.getInstance(view.getContext()).mealsFromCategoryDao()
                         .getMealsFromCategory();
 
 
-                mealAdapter.setData(mealListDatabase);
+                mealAdapter.setData(mealList);
 
                 recyclerView.setAdapter(mealAdapter);
 

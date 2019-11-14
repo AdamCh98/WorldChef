@@ -57,7 +57,7 @@ public class NavigationFragment extends Fragment {
                         selectedFragment = new LearnFragment();
                         break;
                     case R.id.bottom_navigation_social:
-                        selectedFragment = new MealFragment();
+                        selectedFragment = new SocialFragment();
                         break;
                     case R.id.bottom_navigation_recipe:
                         selectedFragment = new LearnFragment();
