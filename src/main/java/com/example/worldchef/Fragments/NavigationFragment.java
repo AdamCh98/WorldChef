@@ -60,7 +60,7 @@ public class NavigationFragment extends Fragment {
                         selectedFragment = new SocialFragment();
                         break;
                     case R.id.bottom_navigation_recipe:
-                        selectedFragment = new LearnFragment();
+                        selectedFragment = new FavouritesFragment();
                         break;
                 }
                 System.out.println("Successfully switched!");

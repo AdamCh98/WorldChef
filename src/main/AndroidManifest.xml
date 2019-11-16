@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.MealDetailActivity"></activity>
+        <activity android:name=".Fragments.FavouritesFragment"></activity>
+        <activity android:name=".Activities.MealDetailActivity" />
         <activity android:name=".Fragments.MealFragment" />
         <activity android:name=".Activities.RegisterActivity" />
         <activity android:name=".Fragments.LearnFragment" />

@@ -11,9 +11,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.worldchef.AppDatabase;
+import com.example.worldchef.Models.Favourite;
 import com.example.worldchef.Models.MealDetail;
 import com.example.worldchef.R;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
 import android.content.Context;
@@ -23,8 +25,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
+
+import static com.example.worldchef.Activities.MainScreenActivity.username;
 
 public class MealDetailActivity extends AppCompatActivity {
 
@@ -35,6 +40,9 @@ public class MealDetailActivity extends AppCompatActivity {
     TextView mealIngredients;
     TextView mealInstructions;
     CardView youtubeCv;
+    FloatingActionButton favouriteActionButton;
+    public static String mealName;
+    public long favouriteCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,14 +56,25 @@ public class MealDetailActivity extends AppCompatActivity {
         mealIngredients = findViewById(R.id.mealdetail_ingredients);
         mealInstructions = findViewById(R.id.mealdetail_instructions);
         youtubeCv = findViewById(R.id.mealdetail_youtube_cv);
+        favouriteActionButton = findViewById(R.id.mealdetail_fav_button);
 
 
         //Grab the meal name that was clicked on.
         Intent explicitIntent = getIntent();
-        final String mealName = explicitIntent.getStringExtra("strMeal");
+        mealName = explicitIntent.getStringExtra("strMeal");
 
         //Change title of Toolbar
         collapsingToolbarLayout.setTitle(mealName);
+
+        //Count - if count = 0, then it hasn't been favourited yet
+        favouriteCount = AppDatabase.getInstance(MealDetailActivity.this).favouriteDao()
+                .getCountOfFavourite(username, mealName);
+
+        //set the favourite button image to be dark-hearted if it has already been favourited
+
+        if(favouriteCount != 0) {
+            favouriteActionButton.setImageResource(R.drawable.ic_favorite_black_24dp);
+        }
 
         //Use API to call upon the meal by name
         String mealUrl = "https://www.themealdb.com/api/json/v1/1/search.php?s=" + mealName;
@@ -82,7 +101,7 @@ public class MealDetailActivity extends AppCompatActivity {
                 AppDatabase.getInstance(context).mealDetailDao().insertMeal(thisMealApi);
 
                 //Extract the specific meal from my database based on name of the meal
-                MealDetail.Meal currentMeal = AppDatabase.getInstance(context).mealDetailDao().getMealByName(mealName);
+                final MealDetail.Meal currentMeal = AppDatabase.getInstance(context).mealDetailDao().getMealByName(mealName);
 
                 //Display all the relevant content
                 mealCountry.setText(currentMeal.getStrArea());
@@ -131,6 +150,49 @@ public class MealDetailActivity extends AppCompatActivity {
 
                 );
 
+                //Button to add to favourites
+                favouriteActionButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick (View v) {
+
+
+                        //Check if not favourited already. If the count = 0, then it has not been favourited yet
+                        if (favouriteCount == 0){
+                            //Add to favourites database
+                            AppDatabase.getInstance(MealDetailActivity.this).favouriteDao()
+                                    .insertFavourite(new Favourite(0,username,currentMeal.getStrMeal(),currentMeal.getStrMealThumb()));
+
+                            //Display toast
+                            favourited(v);
+
+                            //change button
+                            favouriteActionButton.setImageResource(R.drawable.ic_favorite_black_24dp);
+
+
+                        } else {
+                            //Unfavourite
+                            //Get favourite
+                            Favourite favourite = AppDatabase.getInstance(MealDetailActivity.this)
+                                    .favouriteDao().getFavouriteByUsernameAndMeal(username,mealName);
+
+                            //Delete favourite
+                            AppDatabase.getInstance(MealDetailActivity.this).favouriteDao().deleteFavourite(favourite);
+
+                            //Display toast
+                            unFavourited(v);
+
+                            //Change button colour
+                            favouriteActionButton.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+
+
+
+                        }
+
+
+
+                    }
+                });
+
 
                 requestQueue.stop();
 
@@ -149,6 +211,7 @@ public class MealDetailActivity extends AppCompatActivity {
 
 
 
+
     }
 
     public void ingredientsCheck(String ingredient) {
@@ -160,5 +223,13 @@ public class MealDetailActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    public void favourited(View v) {
+        Toast.makeText(MealDetailActivity.this, "You have successfully favourited " + mealName, Toast.LENGTH_SHORT).show();
+    }
+
+    public void unFavourited(View v) {
+        Toast.makeText(MealDetailActivity.this, "You have successfully unfavourited " + mealName, Toast.LENGTH_SHORT).show();
     }
 }

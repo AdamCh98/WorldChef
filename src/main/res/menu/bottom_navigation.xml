@@ -8,10 +8,10 @@
     <item
         android:id = "@+id/bottom_navigation_social"
         android:icon="@drawable/ic_person_outline_black_24dp"
-        android:title="social"/>
+        android:title="Social"/>
     <item
         android:id = "@+id/bottom_navigation_recipe"
         android:icon="@drawable/ic_recipe"
-        android:title="Recipe"/>
+        android:title="Favourites"/>
 
 </menu>
