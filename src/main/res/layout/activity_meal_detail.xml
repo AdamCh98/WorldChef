@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="#FFC107"
-                app:popupTheme="?attr/colorPrimaryDark">
+                app:popupTheme="@color/colorDEFAULTScheme">
 
             </androidx.appcompat.widget.Toolbar>
 

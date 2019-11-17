@@ -1,6 +1,7 @@
 package com.example.worldchef.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ImageView;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -22,8 +24,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.worldchef.Activities.QuizStartScreenActivity;
+import com.example.worldchef.Activities.RegisterActivity;
 import com.example.worldchef.Adapters.CategoryAdapter;
 import com.example.worldchef.AppDatabase;
+import com.example.worldchef.MainActivity;
 import com.example.worldchef.Models.Categories;
 import com.example.worldchef.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -39,6 +44,7 @@ public class LearnFragment extends Fragment {
 
     private RecyclerView categoryRecyclerView;
     private SearchView categorySearchView;
+    private ImageView mQuizImage;
 
     @Nullable
     @Override
@@ -49,6 +55,8 @@ public class LearnFragment extends Fragment {
         categoryRecyclerView = view.findViewById(R.id.learn_rv);
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         categoryRecyclerView.setLayoutManager(layoutManager);
+
+        mQuizImage = view.findViewById(R.id.learn_quiz_image);
 
 
         final CategoryAdapter categoryAdapter = new CategoryAdapter();
@@ -117,6 +125,19 @@ public class LearnFragment extends Fragment {
         };
         StringRequest stringRequest = new StringRequest(Request.Method.GET, categoryUrl, responseListener, errorListener);
         requestQueue.add(stringRequest);
+
+
+        //Click on image to go to quiz page
+        mQuizImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Move to quiz page
+                Context context = getContext();
+                Intent intent = new Intent (context, QuizStartScreenActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }

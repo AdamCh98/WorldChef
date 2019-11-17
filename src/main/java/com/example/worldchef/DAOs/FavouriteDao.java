@@ -30,6 +30,9 @@ public interface FavouriteDao {
     @Delete
     void deleteFavourite(Favourite favourite);
 
+    @Query("DELETE FROM FAVOURITE WHERE USERNAME =:username")
+    void DeleteFavouritesByUsername(String username);
+
 
 
 }

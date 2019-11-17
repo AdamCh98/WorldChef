@@ -94,4 +94,8 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Favo
         return favMeals.size();
     }
 
+    public Favourite getFavouriteAt(int position) {
+        return favMeals.get(position);
+    }
+
 }

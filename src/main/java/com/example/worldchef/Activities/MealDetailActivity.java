@@ -154,7 +154,8 @@ public class MealDetailActivity extends AppCompatActivity {
                 favouriteActionButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick (View v) {
-
+                        favouriteCount = AppDatabase.getInstance(MealDetailActivity.this).favouriteDao()
+                                .getCountOfFavourite(username, mealName);
 
                         //Check if not favourited already. If the count = 0, then it has not been favourited yet
                         if (favouriteCount == 0){

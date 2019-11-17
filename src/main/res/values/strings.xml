@@ -2,5 +2,33 @@
     <string name="app_name">WorldChef</string>
     <string name="username">username</string>
     <string name="password">password</string>
+    <string name="quiz_title">World Chef Quiz</string>
+    <string name="quiz_categories">Choose Category</string>
+    <string name="quiz_button">Start Quiz</string>
+    <string name="quiz_score">Score: 0</string>
+    <string name="quiz_question_count">Question: 1/Total</string>
+    <string name="quiz_countdown">00:30</string>
+    <string name="quiz_mc_options">Option xyzd</string>
+    <string name="quiz_mc_questions">"Actual questions\n Actual question"</string>
+    <string name="quiz_mc_button">Confirm answer</string>
+    <string name="quiz_start_user_score">Total michelin stars: </string>
+    <string name ="quiz_start_category_txt">Category: </string>
+
+
     <string name="fav_title">My favourite recipes</string>
+    <string-array name="Categories">
+        <item>Beef</item>
+        <item>Chicken</item>
+        <item>Dessert</item>
+        <item>Lamb</item>
+        <item>Miscellaneous</item>
+        <item>Pasta</item>
+        <item>Pork</item>
+        <item>Seafood</item>
+        <item>Side</item>
+        <item>Vegan</item>
+        <item>Vegetarian</item>
+        <item>Breakfast</item>
+        <item>Goat</item>
+    </string-array>
 </resources>
