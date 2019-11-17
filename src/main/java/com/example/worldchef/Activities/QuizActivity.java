@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -21,6 +22,7 @@ import com.example.worldchef.R;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import static com.example.worldchef.Activities.MainScreenActivity.username;
 
@@ -47,6 +49,7 @@ public class QuizActivity extends AppCompatActivity {
     private static final long COUNTDOWN_IN_MILLIS = 30000;
     private long countdownTimeLeftMillis;
     private ColorStateList defaultColourCountdown;
+    private CountDownTimer countDownTimer;
 
 
     @Override
@@ -141,6 +144,11 @@ public class QuizActivity extends AppCompatActivity {
 
             answered = false;
 
+            //restart countdown
+            countdownTimeLeftMillis = COUNTDOWN_IN_MILLIS;
+
+            startCountdown();
+
 
         } else {
 
@@ -158,9 +166,48 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
+    private void startCountdown() {
+        countDownTimer = new CountDownTimer(countdownTimeLeftMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+                countdownTimeLeftMillis = millisUntilFinished;
+
+                //update the countdown text
+                changeCountdownText();
+
+            }
+
+            @Override
+            public void onFinish() {
+                //reset
+                countdownTimeLeftMillis = 0;
+                changeCountdownText();
+                markAnswer();
+
+
+
+            }
+        }.start();
+    }
+
+    private void changeCountdownText() {
+        int minutes = (int) (countdownTimeLeftMillis/1000) / 60;
+        int seconds = (int) (countdownTimeLeftMillis/1000) % 60;
+        String time = String.format(Locale.getDefault(),"%02d:%02d", minutes, seconds);
+        questionCountdown.setText(time);
+
+        if(countdownTimeLeftMillis < 5000) {
+            questionCountdown.setTextColor(Color.RED);
+        } else{
+            questionCountdown.setTextColor(defaultColourCountdown);
+        }
+    }
+
     private void markAnswer() {
         answered = true;
 
+        countDownTimer.cancel();
         //Return the id with whatever Radio button is checked
         RadioButton optionSelected = findViewById(questionRadioGroup.getCheckedRadioButtonId());
 
@@ -202,6 +249,17 @@ public class QuizActivity extends AppCompatActivity {
             confirmButton.setText("Finish quiz");
         }
 
+
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        //Cancel countdown timer when activity is finished
+        super.onDestroy();
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
 
     }
 
