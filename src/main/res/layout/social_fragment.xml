@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Current Level:"
+                    android:text="@string/social_cooklevel"
                     android:textColor="#000000"
                     android:textStyle="bold" />
 
@@ -88,7 +88,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Accumulated points:"
+                    android:text="@string/social_totalstars"
                     android:textColor="#000000"
                     android:textStyle="bold" />
 
@@ -120,7 +120,7 @@
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="LEADERBOARD"
+                android:text="@string/social_leaderboard"
                 android:textColor="#000000"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -135,7 +135,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Current Level:"
+                    android:text="@string/social_cookplayer"
                     android:textColor="#000000"
                     android:textStyle="bold" />
 
@@ -144,7 +144,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Actual level"
+                    android:text="@string/social_totalstars"
+                    android:textColor="#000000"
                     android:textStyle="bold" />
             </LinearLayout>
 

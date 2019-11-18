@@ -11,19 +11,24 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.worldchef.Activities.MainScreenActivity;
+import com.example.worldchef.AppDatabase;
 import com.example.worldchef.Fragments.LearnFragment;
 import com.example.worldchef.Fragments.MealFragment;
 import com.example.worldchef.Models.Categories;
+import com.example.worldchef.Models.User;
 import com.example.worldchef.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.worldchef.Activities.MainScreenActivity.username;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> implements Filterable {
 
@@ -72,7 +77,19 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
         holder.mCategoryName.setText(currentCategory.getStrCategory());
         String imageUrl = currentCategory.getStrCategoryThumb();
-        Glide.with(holder.mCategoryName.getContext()).load(imageUrl).into(holder.mCategoryImage);
+
+        //get points of user
+        User currentUser = AppDatabase.getInstance(holder.mCategoryName.getContext()).userDao().getUserByUsername(username);
+        final int currentPoints = currentUser.getPoints();
+
+        //if user has less than 5 points, then set goat as locked
+        if (currentPoints <5 && currentCategory.getStrCategory().contentEquals("Goat")) {
+            holder.mCategoryImage.setImageResource(R.drawable.lockedcategory);
+        } else {
+            Glide.with(holder.mCategoryName.getContext()).load(imageUrl).into(holder.mCategoryImage);
+
+        }
+
 
 
         //Clicking will transition to another fragment.
@@ -80,17 +97,24 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             @Override
             public void onClick(View view) {
 
-                Fragment mealFragment = new MealFragment();
+                //If user that has less than 5 points clicks on it, then they won't be able to access.
 
-                //Storing the category name in bundle to give it to the mealFragment
-                Bundle bundle = new Bundle();
-                bundle.putString("strCategory", currentCategory.getStrCategory());
-                mealFragment.setArguments(bundle);
+                if (currentPoints < 5 && currentCategory.getStrCategory().contentEquals("Goat")) {
+                    Toast.makeText(holder.mCategoryName.getContext(),"Must have at least 5 Michelin stars to unlock!",Toast.LENGTH_SHORT).show();
+                } else {
 
-                //Transition fragment
-                MainScreenActivity activity = (MainScreenActivity) view.getContext();
-                activity.getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.mainscreen_fragmentA, mealFragment).commit();
+                    Fragment mealFragment = new MealFragment();
+
+                    //Storing the category name in bundle to give it to the mealFragment
+                    Bundle bundle = new Bundle();
+                    bundle.putString("strCategory", currentCategory.getStrCategory());
+                    mealFragment.setArguments(bundle);
+
+                    //Transition fragment
+                    MainScreenActivity activity = (MainScreenActivity) view.getContext();
+                    activity.getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.mainscreen_fragmentA, mealFragment).commit();
+                }
 
 
             }

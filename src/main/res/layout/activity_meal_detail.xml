@@ -93,15 +93,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:text="Country of Origin"
+                            android:text="@string/meal_country"
                             android:textColor="#000000"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/mealdetail_area"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Actual country" />
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -126,15 +125,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:text="Food Category"
+                            android:text="@string/meal_category"
                             android:textColor="#000000"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/mealdetail_category"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Food category" />
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -167,15 +165,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:gravity="center"
-                        android:text="Ingredients"
+                        android:text="@string/meal_ingredient"
                         android:textColor="#000000"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/mealdetail_ingredients"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Actual ingredients" />
+                        android:layout_height="wrap_content" />
                 </LinearLayout>/>
             </androidx.cardview.widget.CardView>
 
@@ -203,15 +200,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:gravity="center"
-                        android:text="Instructions"
+                        android:text="@string/meal_instruction"
                         android:textColor="#000000"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/mealdetail_instructions"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Actual Instructions" />
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
                 />
             </androidx.cardview.widget.CardView>
@@ -242,7 +238,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Watch on Youtube" />
+                        android:text="@string/meal_youtube" />
 
 
                 </LinearLayout>

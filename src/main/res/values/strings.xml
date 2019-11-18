@@ -1,7 +1,17 @@
 <resources>
     <string name="app_name">WorldChef</string>
-    <string name="username">username</string>
+    <string name="username">Username</string>
     <string name="password">password</string>
+    <string name="register_gender">Gender: </string>
+    <string name="register_notice">Don\'t have an acccount?</string>
+    <string name="register">REGISTER NOW!</string>
+    <string name="register_email">Email</string>
+    <string name="register_fname">First Name</string>
+    <string name="register_lname">Last Name</string>
+    <string name="register_cpass">Confirm Password</string>
+    <string name="register_button_txt">Register</string>
+
+
     <string name="quiz_title">World Chef Quiz</string>
     <string name="quiz_categories">Choose Category</string>
     <string name="quiz_button">Start Quiz</string>
@@ -14,7 +24,15 @@
     <string name="quiz_start_user_score">Total michelin stars: </string>
     <string name="quiz_start_category_txt">Category: </string>
     <string name="quiz_start_instructions">Instructions: \nComplete quizzes for any food category to collect Michelin stars!</string>
-    <string name="register_gender">Gender: </string>
+
+
+
+    <string name="meal_country">Country of Origin</string>
+    <string name="meal_category">Food Category</string>
+    <string name="meal_ingredient">Ingredients</string>
+    <string name="meal_instruction">Instructions</string>
+    <string name="meal_youtube">Watch on Youtube</string>
+
 
     <string-array name="genders">
         <item>Male</item>
@@ -24,6 +42,13 @@
 
 
     <string name="fav_title">My favourite recipes</string>
+    <string name="fav_none">No Favourites</string>
+
+
+    <string name="social_cooklevel">Current Cook level:</string>
+    <string name="social_totalstars">Total Michelin Stars</string>
+    <string name="social_leaderboard">LEADERBOARD</string>
+    <string name="social_cookplayer">Player Username</string>
     <string-array name="Categories">
         <item>Beef</item>
         <item>Chicken</item>

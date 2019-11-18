@@ -40,7 +40,7 @@
         android:id="@+id/fav_norecipes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No Favourites"
+        android:text="@string/fav_none"
         android:textColor="#9A000000"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"

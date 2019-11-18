@@ -28,6 +28,10 @@ import static com.example.worldchef.Activities.MainScreenActivity.username;
 
 public class QuizActivity extends AppCompatActivity {
 
+    //Quiz implementation adapted from https://www.youtube.com/watch?v=tlgrX3HF6AI
+    //Reference back to quiz start screen adapted from: https://www.youtube.com/watch?v=y1FxIOFuIAs
+    //countdown timer adapted from: https://www.youtube.com/watch?v=bLUXfWkZMD8
+
     private TextView questionTxtView;
     private TextView scoreTxtView;
     private TextView questionCountdown;

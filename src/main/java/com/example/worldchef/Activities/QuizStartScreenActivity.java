@@ -22,6 +22,7 @@ import static com.example.worldchef.Activities.MainScreenActivity.username;
 
 public class QuizStartScreenActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    //Quiz implementation adapted from : https://www.youtube.com/watch?v=pEDVdSUuWXE
     private Button mStartQuizButton;
     private Spinner mCategorySpinner;
     private String categorySelected = " ";
@@ -136,6 +137,11 @@ public class QuizStartScreenActivity extends AppCompatActivity implements Adapte
 
                 //update aggregate
                 totalPointsTxtView.setText("Total Michelin stars: " + (currentUser.getPoints() + score));
+
+                //Display toast if they've just reached 5 points and have unlocked goat category
+                if(currentUser.getPoints() < 5 && (currentUser.getPoints() + score) >=5) {
+                    Toast.makeText(QuizStartScreenActivity.this,"Congratulations you have unlocked the Goat Category!",Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }

@@ -13,8 +13,8 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="50dp"
         android:ems="10"
+        android:hint="@string/username"
         android:inputType="textPersonName"
-        android:hint="Username"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,7 +25,7 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:hint="Email"
+        android:hint="@string/register_email"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_gender_text" />
@@ -48,8 +48,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
-        android:hint="Confirm password"
         android:ems="10"
+        android:hint="@string/register_cpass"
         android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_password" />
@@ -60,21 +60,21 @@
         android:layout_height="37dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
-        android:text="Register"
+        android:text="@string/register_button_txt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_confirmpassword" />
 
     <EditText
-    android:id="@+id/register_firstname"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="50dp"
-    android:layout_marginTop="20dp"
-    android:ems="10"
-    android:inputType="textPersonName"
-    android:hint="First Name"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/register_username" />
+        android:id="@+id/register_firstname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="@string/register_fname"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_username" />
 
     <EditText
         android:id="@+id/register_lastname"
@@ -83,8 +83,8 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
         android:ems="10"
+        android:hint="@string/register_lname"
         android:inputType="textPersonName"
-        android:hint="Last Name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_firstname" />
 

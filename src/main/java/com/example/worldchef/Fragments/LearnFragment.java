@@ -82,49 +82,11 @@ public class LearnFragment extends Fragment {
             }
         });
 
-        //Extract API
-
-        String categoryUrl = "https://www.themealdb.com/api/json/v1/1/categories.php";
-
-        Context context = getContext();
-        final RequestQueue requestQueue = Volley.newRequestQueue(context);
-
-        Response.Listener<String> responseListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                System.out.println(response);
-                Gson gson = new Gson();
-
-                Categories thisCategories = gson.fromJson(response, Categories.class);
-
-                List<Categories.Category> categoryList = thisCategories.getCategories();
-
-                //Add this into my database
-                AppDatabase.getInstance(view.getContext()).categoryDao().insertCategoryList(categoryList);
-
-                //Extract list of categories from database instead
+        //Extract list of categories that was derived from the splash screen
                 List<Categories.Category> categoryListDatabase = AppDatabase.getInstance(view.getContext()).categoryDao().getCategories();
-
                 categoryAdapter.setData(categoryListDatabase);
-
-                //categoryAdapter.setData(categoryList);
-
                 categoryRecyclerView.setAdapter(categoryAdapter);
-                requestQueue.stop();
 
-
-            }
-        };
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse (VolleyError error) {
-                System.out.println(error.toString());
-                requestQueue.stop();
-            }
-        };
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, categoryUrl, responseListener, errorListener);
-        requestQueue.add(stringRequest);
 
 
         //Click on image to go to quiz page
@@ -140,6 +102,22 @@ public class LearnFragment extends Fragment {
         });
 
         return view;
+    }
+
+
+    //When back button is pressed back, update this fragment
+    @Override
+    public void  onResume() {
+        super.onResume();
+
+        Context context = getContext();
+
+        final CategoryAdapter categoryAdapter = new CategoryAdapter();
+        //Extract list of categories that was derived from the splash screen
+        List<Categories.Category> categoryListDatabase = AppDatabase.getInstance(context).categoryDao().getCategories();
+        categoryAdapter.setData(categoryListDatabase);
+        categoryRecyclerView.setAdapter(categoryAdapter);
+
     }
 
 }
