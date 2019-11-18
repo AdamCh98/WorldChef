@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.QuizStartScreenActivity"></activity>
+        <activity android:name=".Activities.SplashScreenActivity"></activity>
+        <activity android:name=".Activities.QuizStartScreenActivity" />
         <activity android:name=".Activities.QuizActivity" />
         <activity android:name=".Fragments.FavouritesFragment" />
         <activity android:name=".Activities.MealDetailActivity" />

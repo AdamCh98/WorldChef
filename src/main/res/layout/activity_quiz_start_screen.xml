@@ -32,11 +32,12 @@
         android:id="@+id/quiz_start_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="100dp"
         android:text="@string/quiz_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/quiz_category_spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/quiz_start_instructions" />
 
     <TextView
         android:id="@+id/quiz_start_user_score"
@@ -61,4 +62,16 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/quiz_start_user_score" />
+
+    <TextView
+        android:id="@+id/quiz_start_instructions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/quiz_start_instructions"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/quiz_category_spinner" />
 </androidx.constraintlayout.widget.ConstraintLayout>

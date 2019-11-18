@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -29,6 +30,7 @@ public class SocialFragment extends Fragment {
     private TextView mUserLevel;
     private TextView mUserPoints;
     private Button mAddPointsButton;
+    private ImageView mProfilePicture;
 
     @Nullable
     @Override
@@ -41,6 +43,7 @@ public class SocialFragment extends Fragment {
         mUserLevel = view.findViewById(R.id.social_cooklevel);
         mUserPoints = view.findViewById(R.id.social_points);
         mAddPointsButton = view.findViewById(R.id.social_testbutton);
+        mProfilePicture = view.findViewById(R.id.social_profile_pic);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         socialRecyclerView.setLayoutManager(layoutManager);
@@ -54,6 +57,20 @@ public class SocialFragment extends Fragment {
 
         mUsername.setText(currentUser.getUsername());
         mUserPoints.setText(" " + currentUser.getPoints());
+
+
+        //Change profile picture depending on gender
+        if(currentUser.getGender().contentEquals("Male")) {
+
+            //Placeholder
+            mProfilePicture.setImageResource(R.drawable.man);
+
+        } else if (currentUser.getGender().contentEquals("Female")) {
+            mProfilePicture.setImageResource(R.drawable.girl);
+        } else {
+            //for others
+            mProfilePicture.setImageResource(R.drawable.defaultprofile);
+        }
 
 
         //Grab data from database:

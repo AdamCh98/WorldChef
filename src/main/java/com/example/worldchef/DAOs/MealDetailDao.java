@@ -20,6 +20,10 @@ public interface MealDetailDao {
     @Query("SELECT * FROM MEAL WHERE strMeal = :strMeal")
     MealDetail.Meal getMealByName(String strMeal);
 
+    //Get meal from meal ID
+    @Query("SELECT * FROM MEAL WHERE idMeal = :idMeal")
+    MealDetail.Meal getMealById(int idMeal);
+
     //Insert a list of meals
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertMealList (List<MealDetail.Meal> meals);

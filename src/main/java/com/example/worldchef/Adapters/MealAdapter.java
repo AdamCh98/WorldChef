@@ -82,6 +82,9 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
                 //Give meal detail the meal name, then start the activity
                 Intent explicitIntent = new Intent(context, MealDetailActivity.class);
                 explicitIntent.putExtra("strMeal", currentMeal.getStrMeal());
+                explicitIntent.putExtra("idMeal",currentMeal.getIdMeal());
+                System.out.println("this is the meal name we are giving to meal detail activity: " + currentMeal.getStrMeal());
+                System.out.println("This is the meal ID: " + currentMeal.getIdMeal());
                 context.startActivity(explicitIntent);
 
 

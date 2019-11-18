@@ -6,8 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +21,7 @@ import com.example.worldchef.R;
 
 import java.util.List;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     private EditText mFirstName;
     private EditText mLastName;
@@ -27,6 +30,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText  mPassword;
     private Button mRegister;
     private EditText mConfirmPassword;
+    private Spinner mGenderSpinner;
+    private String genderSelected = " ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +45,15 @@ public class RegisterActivity extends AppCompatActivity {
         mPassword = findViewById(R.id.register_password);
         mConfirmPassword = findViewById(R.id.register_confirmpassword);
         mRegister = findViewById(R.id.register_button);
+        mGenderSpinner = findViewById(R.id.register_gender_spinner);
 
 
+        //Setting up spinner
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
+                R.array.genders, android.R.layout.simple_spinner_item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mGenderSpinner.setAdapter(spinnerAdapter);
+        mGenderSpinner.setOnItemSelectedListener(this);
 
         //Need to make sure they enter all the necessary fields
         //Need to make sure password and confirmed password equal
@@ -52,7 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
                 //Making sure all forms have been filled:
                 if(checkTextEmpty(mUsername) || checkTextEmpty(mFirstName) ||
                         checkTextEmpty(mLastName) ||checkTextEmpty(mEmail) ||
-                        checkTextEmpty(mPassword) || checkTextEmpty(mConfirmPassword)) {
+                        checkTextEmpty(mPassword) || checkTextEmpty(mConfirmPassword) || genderSelected.equals(" ")) {
                    //Display toast
                     incompleteRegister(v);
 
@@ -70,7 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
                             AppDatabase.getInstance(RegisterActivity.this).userDao().
                                     insertUser(new User(mUsername.getText().toString(), mPassword.getText().toString(),
                                             mFirstName.getText().toString(),
-                                            mLastName.getText().toString(), mEmail.getText().toString(), 0));
+                                            mLastName.getText().toString(), mEmail.getText().toString(), genderSelected, 0));
 
 
                             //Display toast
@@ -118,5 +130,17 @@ public class RegisterActivity extends AppCompatActivity {
 
     public boolean checkTextEmpty(EditText editText) {
         return TextUtils.isEmpty(editText.getText());
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        genderSelected = parent.getItemAtPosition(position).toString();
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

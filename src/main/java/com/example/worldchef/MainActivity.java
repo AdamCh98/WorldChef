@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.worldchef.Activities.MainScreenActivity;
 import com.example.worldchef.Activities.RegisterActivity;
+import com.example.worldchef.Activities.SplashScreenActivity;
 import com.example.worldchef.Models.User;
 
 import java.util.List;
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
                         //go to login page
                         //Switch pages
-                        Intent intent = new Intent (MainActivity.this, MainScreenActivity.class);
+                        Intent intent = new Intent (MainActivity.this, SplashScreenActivity.class);
                         intent.putExtra("username", currentUser.getUsername());
 
                         //Add something here when we get User ID

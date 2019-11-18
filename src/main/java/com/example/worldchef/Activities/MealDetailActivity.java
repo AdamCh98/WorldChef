@@ -61,6 +61,7 @@ public class MealDetailActivity extends AppCompatActivity {
 
         //Grab the meal name that was clicked on.
         Intent explicitIntent = getIntent();
+        int mealId = explicitIntent.getIntExtra("idMeal", 0);
         mealName = explicitIntent.getStringExtra("strMeal");
 
         //Change title of Toolbar
@@ -76,8 +77,9 @@ public class MealDetailActivity extends AppCompatActivity {
             favouriteActionButton.setImageResource(R.drawable.ic_favorite_black_24dp);
         }
 
-        //Use API to call upon the meal by name
-        String mealUrl = "https://www.themealdb.com/api/json/v1/1/search.php?s=" + mealName;
+        //Use API to call upon the meal by ID
+        String mealUrl = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=" + mealId;
+        System.out.println("This is the meal string URL: " + mealUrl);
 
         final Context context = MealDetailActivity.this;
 
@@ -86,7 +88,7 @@ public class MealDetailActivity extends AppCompatActivity {
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                System.out.println(response);
+                System.out.println("This is what you are getting from API: " + response);
                 Gson gson = new Gson();
 
                 MealDetail thisMealDetail = gson.fromJson(response, MealDetail.class);

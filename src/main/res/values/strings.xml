@@ -12,7 +12,15 @@
     <string name="quiz_mc_questions">"Actual questions\n Actual question"</string>
     <string name="quiz_mc_button">Confirm answer</string>
     <string name="quiz_start_user_score">Total michelin stars: </string>
-    <string name ="quiz_start_category_txt">Category: </string>
+    <string name="quiz_start_category_txt">Category: </string>
+    <string name="quiz_start_instructions">Instructions: \nComplete quizzes for any food category to collect Michelin stars!</string>
+    <string name="register_gender">Gender: </string>
+
+    <string-array name="genders">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
 
 
     <string name="fav_title">My favourite recipes</string>

@@ -14,17 +14,27 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+    private String gender;
 
     //Stars represents the points system
     private int points;
 
-    public User(String username, String password, String firstName, String lastName, String email, int points) {
+    public User(String username, String password, String firstName, String lastName, String email, String gender, int points) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.gender = gender;
         this.points = points;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getEmail() {

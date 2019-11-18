@@ -53,7 +53,7 @@ public class FavouritesFragment extends Fragment {
         //Grab list of favourited meals based on username
         List<Favourite> favourites = AppDatabase.getInstance(view.getContext()).favouriteDao().getFavouriteListByUsername(username);
         //Convert into arraylist
-        ArrayList<Favourite> favouriteArrayList = new ArrayList<Favourite>(favourites);
+        final ArrayList<Favourite> favouriteArrayList = new ArrayList<Favourite>(favourites);
 
         //if there are no favourites
         if (favouriteArrayList.size() < 1 ) {
@@ -79,9 +79,18 @@ public class FavouritesFragment extends Fragment {
                 Context context = getContext();
                 //Delete the favourite
                 AppDatabase.getInstance(context).favouriteDao().deleteFavourite(favouriteAdapter.getFavouriteAt(viewHolder.getAdapterPosition()));
+                //favouriteArrayList.remove(viewHolder.getAdapterPosition());
 
+                //viewHolder.setIsRecyclable(false);
+                favouriteAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                 Toast.makeText(context, "Favourite deleted", Toast.LENGTH_SHORT).show();
 
+                //Check if favourites is empty after swipe
+                long count = favouriteArrayList.size();
+
+                if(count < 1) {
+                    mNoFavourites.setVisibility((TextView.VISIBLE));
+                }
 
             }
         }).attachToRecyclerView(favouriteRecyclerView);
