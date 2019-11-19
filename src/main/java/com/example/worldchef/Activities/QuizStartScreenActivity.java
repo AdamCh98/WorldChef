@@ -30,8 +30,6 @@ public class QuizStartScreenActivity extends AppCompatActivity implements Adapte
     private static final int CODE_QUIZ_RESULT = 1;
     private int mostRecentScore;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,8 +62,6 @@ public class QuizStartScreenActivity extends AppCompatActivity implements Adapte
                 } else {
                     Toast.makeText(QuizStartScreenActivity.this, "Please select category first", Toast.LENGTH_SHORT).show();
                 }
-
-
 
 
             }
@@ -113,7 +109,6 @@ public class QuizStartScreenActivity extends AppCompatActivity implements Adapte
 
         db.quizDao().insertQuestion(new Quiz("What is 2 + 2", "4","2","3",
                 1,"Chicken"));
-
 
 
     }
