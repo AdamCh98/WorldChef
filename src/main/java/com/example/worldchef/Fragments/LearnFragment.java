@@ -28,9 +28,12 @@ import com.example.worldchef.Activities.QuizStartScreenActivity;
 import com.example.worldchef.Activities.RegisterActivity;
 import com.example.worldchef.Adapters.CategoryAdapter;
 import com.example.worldchef.AppDatabase;
+import com.example.worldchef.AsyncTasks.GetAllCategoriesAsyncTask;
+import com.example.worldchef.AsyncTasks.InsertCategoryListAsyncTask;
 import com.example.worldchef.MainActivity;
 import com.example.worldchef.Models.Categories;
 import com.example.worldchef.R;
+import com.example.worldchef.TaskDelegates.AsyncTaskCategoryDelegate;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
@@ -40,11 +43,12 @@ import java.util.List;
 
 import com.example.worldchef.R;
 
-public class LearnFragment extends Fragment {
+public class LearnFragment extends Fragment implements AsyncTaskCategoryDelegate {
 
     private RecyclerView categoryRecyclerView;
     private SearchView categorySearchView;
     private ImageView mQuizImage;
+    private  CategoryAdapter categoryAdapter;
 
     @Nullable
     @Override
@@ -59,7 +63,7 @@ public class LearnFragment extends Fragment {
         mQuizImage = view.findViewById(R.id.learn_quiz_image);
 
 
-        final CategoryAdapter categoryAdapter = new CategoryAdapter();
+        categoryAdapter = new CategoryAdapter();
 
         //Setting search bar
         categorySearchView = view.findViewById(R.id.search_bar);
@@ -83,11 +87,11 @@ public class LearnFragment extends Fragment {
         });
 
         //Extract list of categories that was derived from the splash screen
-                List<Categories.Category> categoryListDatabase = AppDatabase.getInstance(view.getContext()).categoryDao().getCategories();
-                categoryAdapter.setData(categoryListDatabase);
-                categoryRecyclerView.setAdapter(categoryAdapter);
-
-
+        AppDatabase db = AppDatabase.getInstance(view.getContext());
+        GetAllCategoriesAsyncTask getAllCategoriesAsyncTask = new GetAllCategoriesAsyncTask();
+        getAllCategoriesAsyncTask.setDatabase(db);
+        getAllCategoriesAsyncTask.setDelegate(LearnFragment.this);
+        getAllCategoriesAsyncTask.execute();
 
         //Click on image to go to quiz page
         mQuizImage.setOnClickListener(new View.OnClickListener() {
@@ -112,12 +116,31 @@ public class LearnFragment extends Fragment {
 
         Context context = getContext();
 
-        final CategoryAdapter categoryAdapter = new CategoryAdapter();
         //Extract list of categories that was derived from the splash screen
-        List<Categories.Category> categoryListDatabase = AppDatabase.getInstance(context).categoryDao().getCategories();
-        categoryAdapter.setData(categoryListDatabase);
-        categoryRecyclerView.setAdapter(categoryAdapter);
+        AppDatabase db = AppDatabase.getInstance(context);
+        GetAllCategoriesAsyncTask getAllCategoriesAsyncTask = new GetAllCategoriesAsyncTask();
+        getAllCategoriesAsyncTask.setDatabase(db);
+        getAllCategoriesAsyncTask.setDelegate(LearnFragment.this);
+        getAllCategoriesAsyncTask.execute();
 
     }
 
+    @Override
+    public void handleGetAllCategoriesTask(List<Categories.Category> categories) {
+
+        //Load the list of categories onto recycler view
+        List<Categories.Category> categoryListDatabase = categories;
+        categoryAdapter.setData(categoryListDatabase);
+        categoryRecyclerView.setAdapter(categoryAdapter);
+    }
+
+    @Override
+    public void handleGetCategoryByIdTask(Categories.Category category) {
+
+    }
+
+    @Override
+    public void handleInsertCategoryListTask(String result) {
+
+    }
 }
