@@ -8,7 +8,9 @@ import com.example.worldchef.Models.Quiz;
 import com.example.worldchef.TaskDelegates.AsyncTaskFavouriteDelegate;
 import com.example.worldchef.TaskDelegates.AsyncTaskQuizDelegate;
 
-public class InsertQuestionAsyncTask extends AsyncTask<Quiz, Integer, String> {
+import java.util.Arrays;
+
+public class InsertQuestionsAsyncTask extends AsyncTask<Quiz, Integer, String> {
 
     private AsyncTaskQuizDelegate delegate;
 
@@ -30,10 +32,9 @@ public class InsertQuestionAsyncTask extends AsyncTask<Quiz, Integer, String> {
     @Override
     protected String doInBackground(Quiz...quizzes) {
 
-        db.quizDao().insertQuestion(quizzes[0]);
+        db.quizDao().insertQuestionList(Arrays.asList(quizzes));
 
-
-        return "Successfully added question!";
+        return "Successfully added questions!";
     }
 
     @Override

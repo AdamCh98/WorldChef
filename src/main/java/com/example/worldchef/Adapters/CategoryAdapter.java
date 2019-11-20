@@ -130,24 +130,35 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         getUserByUsernameAsyncTask.setDelegate(CategoryAdapter.this);
         getUserByUsernameAsyncTask.execute(username);
 
-        //if user has less than 5 points, then set goat as locked
-        if (currentPoints <5 && currentCategory.getStrCategory().contentEquals("Goat")) {
+        //Set the image
+        Glide.with(holder.mCategoryName.getContext()).load(imageUrl).into(holder.mCategoryImage);
+
+        //If user that has less than the applicable points, display the locked photo
+        //Unlockable categories: Miscellaneous, goat, and Dessert
+        if (currentPoints <10 && currentCategory.getStrCategory().contentEquals("Goat")) {
             holder.mCategoryImage.setImageResource(R.drawable.lockedcategory);
-        } else {
-            Glide.with(holder.mCategoryName.getContext()).load(imageUrl).into(holder.mCategoryImage);
-
         }
-
+        if(currentPoints <20 && currentCategory.getStrCategory().contentEquals("Dessert")) {
+            holder.mCategoryImage.setImageResource(R.drawable.lockedcategory);
+        }
+        if (currentPoints <30 && currentCategory.getStrCategory().contentEquals("Miscellaneous")) {
+            holder.mCategoryImage.setImageResource(R.drawable.lockedcategory);
+        }
 
         //Clicking will transition to another fragment.
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                //If user that has less than 5 points clicks on it, then they won't be able to access.
+                //If user that has less than the applicable points, they are unable to access these categories
+                //Unlockable categories: Miscellaneous, goat, and Dessert
 
-                if (currentPoints < 5 && currentCategory.getStrCategory().contentEquals("Goat")) {
-                    Toast.makeText(holder.mCategoryName.getContext(),"Must have at least 5 Michelin stars to unlock!",Toast.LENGTH_SHORT).show();
+                if (currentPoints < 10 && currentCategory.getStrCategory().contentEquals("Goat")) {
+                    Toast.makeText(holder.mCategoryName.getContext(),"Must have at least 10 Michelin stars to unlock!",Toast.LENGTH_SHORT).show();
+                } else if(currentPoints <20  && currentCategory.getStrCategory().contentEquals("Dessert")) {
+                    Toast.makeText(holder.mCategoryName.getContext(),"Must have at least 20 Michelin stars to unlock!",Toast.LENGTH_SHORT).show();
+                } else if (currentPoints < 30 && currentCategory.getStrCategory().contentEquals("Miscellaneous")) {
+                    Toast.makeText(holder.mCategoryName.getContext(),"Must have at least 30 Michelin stars to unlock!",Toast.LENGTH_SHORT).show();
                 } else {
 
                     Fragment mealFragment = new MealFragment();

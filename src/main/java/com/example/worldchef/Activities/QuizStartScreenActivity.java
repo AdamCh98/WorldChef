@@ -13,16 +13,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.worldchef.AppDatabase;
+import com.example.worldchef.AsyncTasks.GetQuestionCountAsyncTask;
 import com.example.worldchef.AsyncTasks.GetUserByUsernameAsyncTask;
 import com.example.worldchef.AsyncTasks.InsertPointsAsyncTask;
-import com.example.worldchef.AsyncTasks.InsertQuestionAsyncTask;
-import com.example.worldchef.MainActivity;
+import com.example.worldchef.AsyncTasks.InsertQuestionsAsyncTask;
 import com.example.worldchef.Models.Quiz;
 import com.example.worldchef.Models.User;
 import com.example.worldchef.R;
 import com.example.worldchef.TaskDelegates.AsyncTaskQuizDelegate;
 import com.example.worldchef.TaskDelegates.AsyncTaskUserDelegate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.worldchef.Activities.MainScreenActivity.username;
@@ -52,6 +53,23 @@ public class QuizStartScreenActivity extends AppCompatActivity implements Adapte
         mCategorySpinner.setAdapter(spinnerAdapter);
         mCategorySpinner.setOnItemSelectedListener(this);
 
+
+
+        AppDatabase db = AppDatabase.getInstance(QuizStartScreenActivity.this);
+        //Insert questions if it doesn't already exist in the Quiz table
+        GetQuestionCountAsyncTask getQuestionCountAsyncTask = new GetQuestionCountAsyncTask();
+        getQuestionCountAsyncTask.setDatabase(db);
+        getQuestionCountAsyncTask.setDelegate(QuizStartScreenActivity.this);
+        getQuestionCountAsyncTask.execute();
+
+
+
+        //Get points from user
+        GetUserByUsernameAsyncTask getUserByUsernameAsyncTask = new GetUserByUsernameAsyncTask();
+        getUserByUsernameAsyncTask.setDatabase(db);
+        getUserByUsernameAsyncTask.setDelegate(QuizStartScreenActivity.this);
+        getUserByUsernameAsyncTask.execute(username);
+
         //handing button
         mStartQuizButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,24 +93,6 @@ public class QuizStartScreenActivity extends AppCompatActivity implements Adapte
             }
         });
 
-        AppDatabase db = AppDatabase.getInstance(QuizStartScreenActivity.this);
-
-        //Insert questions if it doesn't already exist in the Quiz table
-        long countOfQuestions = AppDatabase.getInstance(this).quizDao().getCountOfQuestions();
-
-        if(countOfQuestions == 0) {
-
-            //Insert questions
-            createQuestionsDatabase();
-
-        }
-
-
-        //Get points from user
-        GetUserByUsernameAsyncTask getUserByUsernameAsyncTask = new GetUserByUsernameAsyncTask();
-        getUserByUsernameAsyncTask.setDatabase(db);
-        getUserByUsernameAsyncTask.setDelegate(QuizStartScreenActivity.this);
-        getUserByUsernameAsyncTask.execute(username);
 
 
 
@@ -113,16 +113,23 @@ public class QuizStartScreenActivity extends AppCompatActivity implements Adapte
     public void createQuestionsDatabase(){
 
         AppDatabase db = AppDatabase.getInstance(this);
-        InsertQuestionAsyncTask insertQuestionAsyncTask = new InsertQuestionAsyncTask();
+        InsertQuestionsAsyncTask insertQuestionAsyncTask = new InsertQuestionsAsyncTask();
         insertQuestionAsyncTask.setDatabase(db);
         insertQuestionAsyncTask.setDelegate(QuizStartScreenActivity.this);
 
         //chicken
-        insertQuestionAsyncTask.execute(new Quiz("What is 1 + 1", "1","2","3",
-                2,"Chicken"));
+        ArrayList<Quiz> questions = new ArrayList<>();
 
-        insertQuestionAsyncTask.execute(new Quiz("What is 2 + 2", "4","2","3",
+        questions.add(new Quiz("What is 1 + 1", "1","2","3",
+                2,"Chicken"));
+        questions.add(new Quiz("What is 2 + 2", "4","2","3",
                 1,"Chicken"));
+
+
+        Quiz[] quizzArray = questions.toArray(new Quiz[questions.size()]);
+
+
+        insertQuestionAsyncTask.execute(quizzArray);
 
     }
 
@@ -130,9 +137,12 @@ public class QuizStartScreenActivity extends AppCompatActivity implements Adapte
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+
+
         if (requestCode == CODE_QUIZ_RESULT) {
             if(resultCode == RESULT_OK) {
                 score = data.getIntExtra(QuizActivity.EXTRA_SCORE,0);
+                System.out.println("this is the score from your latest game: " + score);
 
                 //Add their score to their total accumulated points
                 //Insert new points
@@ -142,19 +152,27 @@ public class QuizStartScreenActivity extends AppCompatActivity implements Adapte
                 insertPointsAsyncTask.setDelegate(QuizStartScreenActivity.this);
                 insertPointsAsyncTask.execute(score, currentUser.getPoints(),currentUser.getUsername());
 
-                //System.out.println(score);
-
             }
         }
     }
 
     @Override
     public void handleInsertQuestionTask(String result) {
-
+        System.out.println(result);
     }
 
     @Override
     public void handleGetQuestionCountTask(long count) {
+
+        long countOfQuestions = count;
+        System.out.println("number of questions that exist: " + countOfQuestions);
+
+        if(countOfQuestions == 0) {
+
+            //Insert questions if it doesn't exist
+            createQuestionsDatabase();
+
+        }
 
     }
 
@@ -193,12 +211,24 @@ public class QuizStartScreenActivity extends AppCompatActivity implements Adapte
 
     @Override
     public void handleInsertPoints(String result) {
-        //update aggregate
-        totalPointsTxtView.setText("Total Michelin stars: " + (currentUser.getPoints() + score));
 
+        //We need to update score by updating user
+        AppDatabase db = AppDatabase.getInstance(QuizStartScreenActivity.this);
+        GetUserByUsernameAsyncTask getUserByUsernameAsyncTask = new GetUserByUsernameAsyncTask();
+        getUserByUsernameAsyncTask.setDatabase(db);
+        getUserByUsernameAsyncTask.setDelegate(QuizStartScreenActivity.this);
+        getUserByUsernameAsyncTask.execute(username);
+
+        System.out.println("This is how much points you have after getting more " + currentUser.getPoints());
+        System.out.println("this is the value of the int score " + score);
+        //update aggregate
         //Display toast if they've just reached 5 points and have unlocked goat category
-        if(currentUser.getPoints() < 5 && (currentUser.getPoints() + score) >=5) {
+        if(currentUser.getPoints() < 10 && (currentUser.getPoints() + score) >=10) {
             Toast.makeText(QuizStartScreenActivity.this,"Congratulations you have unlocked the Goat Category!",Toast.LENGTH_SHORT).show();
+        } else if (currentUser.getPoints() < 20 && (currentUser.getPoints() + score) >=20) {
+            Toast.makeText(QuizStartScreenActivity.this,"Congratulations you have unlocked the Dessert Category!",Toast.LENGTH_SHORT).show();
+        } else if (currentUser.getPoints() < 30 && (currentUser.getPoints() + score) >=30) {
+            Toast.makeText(QuizStartScreenActivity.this,"Congratulations you have unlocked the Miscellaneous Category!",Toast.LENGTH_SHORT).show();
         }
     }
 }

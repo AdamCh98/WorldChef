@@ -37,7 +37,6 @@ public class SocialFragment extends Fragment implements AsyncTaskUserDelegate {
     private User currentUser;
     private List<User> userList;
     private SocialAdapter socialAdapter;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,

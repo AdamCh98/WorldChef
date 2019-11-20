@@ -43,6 +43,8 @@ import java.util.List;
 
 import com.example.worldchef.R;
 
+//Search bar adapted from: https://www.youtube.com/watch?v=sJ-Z9G0SDhc
+
 public class LearnFragment extends Fragment implements AsyncTaskCategoryDelegate {
 
     private RecyclerView categoryRecyclerView;
