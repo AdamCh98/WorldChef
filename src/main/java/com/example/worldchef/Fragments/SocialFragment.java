@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.worldchef.Adapters.CategoryAdapter;
 import com.example.worldchef.Adapters.SocialAdapter;
 import com.example.worldchef.AppDatabase;
 import com.example.worldchef.AsyncTasks.GetAllUsersAsyncTask;
@@ -41,11 +38,11 @@ public class SocialFragment extends Fragment implements AsyncTaskUserDelegate {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.social_fragment, container, false);
+        final View view = inflater.inflate(R.layout.fragment_social, container, false);
 
         mUsername = view.findViewById(R.id.social_username);
         socialRecyclerView = view.findViewById(R.id.social_leaderboardrv);
-        mUserLevel = view.findViewById(R.id.social_cooklevel);
+       // mUserLevel = view.findViewById(R.id.social_cooklevel);
         mUserPoints = view.findViewById(R.id.social_points);
         mProfilePicture = view.findViewById(R.id.social_profile_pic);
 

@@ -26,6 +26,6 @@
         android:id="@+id/learn_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F7F3F3" />
+        android:background="@color/colorBACKGROUND" />
 
 </LinearLayout>

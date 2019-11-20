@@ -34,6 +34,8 @@ import static com.example.worldchef.Activities.MainScreenActivity.username;
 
 public class FavouritesFragment extends Fragment implements AsyncTaskFavouriteDelegate {
 
+    //Swipe to delete functionality was adapted from https://www.youtube.com/watch?v=dYbbTGiZ2sA
+
     private RecyclerView favouriteRecyclerView;
     private TextView mNoFavourites;
     private ImageView mClearAllBin;

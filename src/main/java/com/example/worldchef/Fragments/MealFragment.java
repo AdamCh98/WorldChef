@@ -52,7 +52,7 @@ public class MealFragment extends Fragment implements AsyncTaskCategoryDelegate,
     public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container,
                               @Nullable Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.meal_fragment, container, false);
+        final View view = inflater.inflate(R.layout.fragment_meal, container, false);
 
         //Linking to layout
         recyclerView = view.findViewById(R.id.meal_rv);

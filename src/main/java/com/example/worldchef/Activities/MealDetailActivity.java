@@ -30,6 +30,7 @@ import com.google.gson.Gson;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -40,6 +41,8 @@ import android.widget.Toast;
 import java.util.List;
 
 import static com.example.worldchef.Activities.MainScreenActivity.username;
+
+//Collapsing tool bar with image adapted from: https://www.youtube.com/watch?v=-pTW3EOPxtQ&t=421s
 
 public class MealDetailActivity extends AppCompatActivity implements AsyncTaskMealDetailDelegate, AsyncTaskFavouriteDelegate {
 
@@ -78,6 +81,8 @@ public class MealDetailActivity extends AppCompatActivity implements AsyncTaskMe
 
         //Change title of Toolbar
         collapsingToolbarLayout.setTitle(mealName);
+        collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
+        collapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);
 
         //Count - if count = 0, then it hasn't been favourited yet - see method below
         final AppDatabase db = AppDatabase.getInstance(MealDetailActivity.this);

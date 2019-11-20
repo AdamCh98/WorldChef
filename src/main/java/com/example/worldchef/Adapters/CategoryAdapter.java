@@ -131,18 +131,17 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         getUserByUsernameAsyncTask.execute(username);
 
         //Set the image
-        Glide.with(holder.mCategoryName.getContext()).load(imageUrl).into(holder.mCategoryImage);
 
         //If user that has less than the applicable points, display the locked photo
         //Unlockable categories: Miscellaneous, goat, and Dessert
         if (currentPoints <10 && currentCategory.getStrCategory().contentEquals("Goat")) {
             holder.mCategoryImage.setImageResource(R.drawable.lockedcategory);
-        }
-        if(currentPoints <20 && currentCategory.getStrCategory().contentEquals("Dessert")) {
+        } else if(currentPoints <20 && currentCategory.getStrCategory().contentEquals("Dessert")) {
             holder.mCategoryImage.setImageResource(R.drawable.lockedcategory);
-        }
-        if (currentPoints <30 && currentCategory.getStrCategory().contentEquals("Miscellaneous")) {
+        } else if (currentPoints <30 && currentCategory.getStrCategory().contentEquals("Miscellaneous")) {
             holder.mCategoryImage.setImageResource(R.drawable.lockedcategory);
+        } else {
+            Glide.with(holder.mCategoryName.getContext()).load(imageUrl).into(holder.mCategoryImage);
         }
 
         //Clicking will transition to another fragment.

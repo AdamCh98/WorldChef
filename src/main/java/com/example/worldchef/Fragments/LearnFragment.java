@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -12,36 +11,20 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.SearchView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.worldchef.Activities.QuizStartScreenActivity;
-import com.example.worldchef.Activities.RegisterActivity;
 import com.example.worldchef.Adapters.CategoryAdapter;
 import com.example.worldchef.AppDatabase;
 import com.example.worldchef.AsyncTasks.GetAllCategoriesAsyncTask;
-import com.example.worldchef.AsyncTasks.InsertCategoryListAsyncTask;
-import com.example.worldchef.MainActivity;
 import com.example.worldchef.Models.Categories;
 import com.example.worldchef.R;
 import com.example.worldchef.TaskDelegates.AsyncTaskCategoryDelegate;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.gson.Gson;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import com.example.worldchef.R;
 
 //Search bar adapted from: https://www.youtube.com/watch?v=sJ-Z9G0SDhc
 
@@ -56,7 +39,7 @@ public class LearnFragment extends Fragment implements AsyncTaskCategoryDelegate
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.activity_learn_fragment, container, false);
+        final View view = inflater.inflate(R.layout.fragment_learn, container, false);
 
         categoryRecyclerView = view.findViewById(R.id.learn_rv);
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());

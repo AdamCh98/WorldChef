@@ -48,7 +48,7 @@
     <string name="social_cooklevel">Current Cook level:</string>
     <string name="social_totalstars">Total Michelin Stars</string>
     <string name="social_leaderboard">LEADERBOARD</string>
-    <string name="social_cookplayer">Player Username</string>
+    <string name="social_cookplayer">Username</string>
     <string-array name="Categories">
         <item>Beef</item>
         <item>Chicken</item>

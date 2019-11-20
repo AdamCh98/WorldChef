@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBACKGROUND"
     tools:context=".Fragments.MealFragment">
 
     <androidx.cardview.widget.CardView
@@ -36,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:background="#F0E9D851"
+                android:background="@color/colorDEFAULTScheme"
                 android:gravity="center"
                 android:text="Name of category"
                 android:textColor="#000000"
@@ -58,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="1dp"
-        android:background="#60FFEB3B"
+        android:background="@color/colorBACKGROUND"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/meal_sv" />
