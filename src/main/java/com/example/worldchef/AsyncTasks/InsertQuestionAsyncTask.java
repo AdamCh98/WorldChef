@@ -4,17 +4,17 @@ import android.os.AsyncTask;
 
 import com.example.worldchef.AppDatabase;
 import com.example.worldchef.Models.Favourite;
-import com.example.worldchef.Models.User;
+import com.example.worldchef.Models.Quiz;
 import com.example.worldchef.TaskDelegates.AsyncTaskFavouriteDelegate;
-import com.example.worldchef.TaskDelegates.AsyncTaskUserDelegate;
+import com.example.worldchef.TaskDelegates.AsyncTaskQuizDelegate;
 
-public class DeleteFavouriteAsyncTask extends AsyncTask<Favourite, Integer, String> {
+public class InsertQuestionAsyncTask extends AsyncTask<Quiz, Integer, String> {
 
-    private AsyncTaskFavouriteDelegate delegate;
+    private AsyncTaskQuizDelegate delegate;
 
     private AppDatabase db;
 
-    public void setDelegate(AsyncTaskFavouriteDelegate delegate) {
+    public void setDelegate(AsyncTaskQuizDelegate delegate) {
         this.delegate = delegate;
     }
 
@@ -28,17 +28,18 @@ public class DeleteFavouriteAsyncTask extends AsyncTask<Favourite, Integer, Stri
     }
 
     @Override
-    protected String doInBackground(Favourite...favourites) {
+    protected String doInBackground(Quiz...quizzes) {
 
-        db.favouriteDao().deleteFavourite(favourites[0]);
+        db.quizDao().insertQuestion(quizzes[0]);
 
-        return "Successfully deleted favourite!";
+
+        return "Successfully added question!";
     }
 
     @Override
     protected void onPostExecute(String result) {
 
-        delegate.handleDeleteFavourite(result);
+        delegate.handleInsertQuestionTask(result);
     }
 
 }

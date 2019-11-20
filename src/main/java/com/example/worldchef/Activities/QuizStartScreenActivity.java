@@ -13,14 +13,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.worldchef.AppDatabase;
+import com.example.worldchef.AsyncTasks.GetUserByUsernameAsyncTask;
+import com.example.worldchef.AsyncTasks.InsertPointsAsyncTask;
+import com.example.worldchef.AsyncTasks.InsertQuestionAsyncTask;
 import com.example.worldchef.MainActivity;
 import com.example.worldchef.Models.Quiz;
 import com.example.worldchef.Models.User;
 import com.example.worldchef.R;
+import com.example.worldchef.TaskDelegates.AsyncTaskQuizDelegate;
+import com.example.worldchef.TaskDelegates.AsyncTaskUserDelegate;
+
+import java.util.List;
 
 import static com.example.worldchef.Activities.MainScreenActivity.username;
 
-public class QuizStartScreenActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class QuizStartScreenActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, AsyncTaskQuizDelegate, AsyncTaskUserDelegate {
 
     //Quiz implementation adapted from : https://www.youtube.com/watch?v=pEDVdSUuWXE
     private Button mStartQuizButton;
@@ -28,7 +35,8 @@ public class QuizStartScreenActivity extends AppCompatActivity implements Adapte
     private String categorySelected = " ";
     private TextView totalPointsTxtView;
     private static final int CODE_QUIZ_RESULT = 1;
-    private int mostRecentScore;
+    private User currentUser;
+    private int score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,20 +75,24 @@ public class QuizStartScreenActivity extends AppCompatActivity implements Adapte
             }
         });
 
+        AppDatabase db = AppDatabase.getInstance(QuizStartScreenActivity.this);
+
         //Insert questions if it doesn't already exist in the Quiz table
         long countOfQuestions = AppDatabase.getInstance(this).quizDao().getCountOfQuestions();
 
         if(countOfQuestions == 0) {
 
             //Insert questions
-            createQuestionsDatabase();;
+            createQuestionsDatabase();
+
         }
 
 
         //Get points from user
-        User currentUser = AppDatabase.getInstance(this).userDao().getUserByUsername(username);
-        totalPointsTxtView.setText("Total Michelin stars: " + currentUser.getPoints());
-
+        GetUserByUsernameAsyncTask getUserByUsernameAsyncTask = new GetUserByUsernameAsyncTask();
+        getUserByUsernameAsyncTask.setDatabase(db);
+        getUserByUsernameAsyncTask.setDelegate(QuizStartScreenActivity.this);
+        getUserByUsernameAsyncTask.execute(username);
 
 
 
@@ -101,15 +113,16 @@ public class QuizStartScreenActivity extends AppCompatActivity implements Adapte
     public void createQuestionsDatabase(){
 
         AppDatabase db = AppDatabase.getInstance(this);
+        InsertQuestionAsyncTask insertQuestionAsyncTask = new InsertQuestionAsyncTask();
+        insertQuestionAsyncTask.setDatabase(db);
+        insertQuestionAsyncTask.setDelegate(QuizStartScreenActivity.this);
 
-        //Insert questions
-        //Chicken
-        db.quizDao().insertQuestion(new Quiz("What is 1 + 1", "1","2","3",
+        //chicken
+        insertQuestionAsyncTask.execute(new Quiz("What is 1 + 1", "1","2","3",
                 2,"Chicken"));
 
-        db.quizDao().insertQuestion(new Quiz("What is 2 + 2", "4","2","3",
+        insertQuestionAsyncTask.execute(new Quiz("What is 2 + 2", "4","2","3",
                 1,"Chicken"));
-
 
     }
 
@@ -119,25 +132,73 @@ public class QuizStartScreenActivity extends AppCompatActivity implements Adapte
 
         if (requestCode == CODE_QUIZ_RESULT) {
             if(resultCode == RESULT_OK) {
-                int score = data.getIntExtra(QuizActivity.EXTRA_SCORE,0);
+                score = data.getIntExtra(QuizActivity.EXTRA_SCORE,0);
 
                 //Add their score to their total accumulated points
-                AppDatabase db = AppDatabase.getInstance(this);
-                User currentUser = db.userDao().getUserByUsername(username);
                 //Insert new points
-                AppDatabase.getInstance(this).userDao().addPoints(score,currentUser.getPoints(),
-                        currentUser.getUsername());
+                AppDatabase db = AppDatabase.getInstance(QuizStartScreenActivity.this);
+                InsertPointsAsyncTask insertPointsAsyncTask = new InsertPointsAsyncTask();
+                insertPointsAsyncTask.setDatabase(db);
+                insertPointsAsyncTask.setDelegate(QuizStartScreenActivity.this);
+                insertPointsAsyncTask.execute(score, currentUser.getPoints(),currentUser.getUsername());
 
-                System.out.println(score);
+                //System.out.println(score);
 
-                //update aggregate
-                totalPointsTxtView.setText("Total Michelin stars: " + (currentUser.getPoints() + score));
-
-                //Display toast if they've just reached 5 points and have unlocked goat category
-                if(currentUser.getPoints() < 5 && (currentUser.getPoints() + score) >=5) {
-                    Toast.makeText(QuizStartScreenActivity.this,"Congratulations you have unlocked the Goat Category!",Toast.LENGTH_SHORT).show();
-                }
             }
+        }
+    }
+
+    @Override
+    public void handleInsertQuestionTask(String result) {
+
+    }
+
+    @Override
+    public void handleGetQuestionCountTask(long count) {
+
+    }
+
+    @Override
+    public void handleGetQuestionTask(List<Quiz> questions) {
+
+    }
+
+    @Override
+    public void handleInsertUserResult(String result) {
+
+    }
+
+    @Override
+    public void handleGetUserResult(User user) {
+
+    }
+
+    @Override
+    public void handleGetAllUsersResult(List<User> users) {
+
+    }
+
+    @Override
+    public void handleGetUsernamesResult(List<String> usernames) {
+
+    }
+
+    @Override
+    public void handleGetUserByUserName(User user) {
+
+        currentUser = user;
+        totalPointsTxtView.setText("Total Michelin stars: " + currentUser.getPoints());
+
+    }
+
+    @Override
+    public void handleInsertPoints(String result) {
+        //update aggregate
+        totalPointsTxtView.setText("Total Michelin stars: " + (currentUser.getPoints() + score));
+
+        //Display toast if they've just reached 5 points and have unlocked goat category
+        if(currentUser.getPoints() < 5 && (currentUser.getPoints() + score) >=5) {
+            Toast.makeText(QuizStartScreenActivity.this,"Congratulations you have unlocked the Goat Category!",Toast.LENGTH_SHORT).show();
         }
     }
 }

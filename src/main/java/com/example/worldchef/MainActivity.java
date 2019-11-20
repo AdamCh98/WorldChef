@@ -144,4 +144,9 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskUserDele
 
 
     }
+
+    @Override
+    public void handleInsertPoints(String result) {
+
+    }
 }

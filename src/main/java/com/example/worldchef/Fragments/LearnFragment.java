@@ -135,7 +135,7 @@ public class LearnFragment extends Fragment implements AsyncTaskCategoryDelegate
     }
 
     @Override
-    public void handleGetCategoryByIdTask(Categories.Category category) {
+    public void handleGetCategoryByNameTask(Categories.Category category) {
 
     }
 

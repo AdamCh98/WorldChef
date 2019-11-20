@@ -187,4 +187,9 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
 
 
     }
+
+    @Override
+    public void handleInsertPoints(String result) {
+
+    }
 }

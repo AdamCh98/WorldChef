@@ -19,29 +19,74 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.worldchef.Activities.MainScreenActivity;
 import com.example.worldchef.AppDatabase;
+import com.example.worldchef.AsyncTasks.GetUserByUsernameAsyncTask;
 import com.example.worldchef.Fragments.LearnFragment;
 import com.example.worldchef.Fragments.MealFragment;
 import com.example.worldchef.Models.Categories;
 import com.example.worldchef.Models.User;
 import com.example.worldchef.R;
+import com.example.worldchef.TaskDelegates.AsyncTaskUserDelegate;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.worldchef.Activities.MainScreenActivity.username;
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> implements Filterable {
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> implements Filterable, AsyncTaskUserDelegate {
 
     //List of categories
     public List<Categories.Category> categories;
 
     private List<Categories.Category> categoryListFull;
+    private User currentUser;
+    private int currentPoints;
 
 
 
     public void setData(List<Categories.Category> categoriesToAdapt) {
         this.categories = categoriesToAdapt;
         categoryListFull = new ArrayList<>(categoriesToAdapt);
+    }
+
+    @Override
+    public void handleInsertUserResult(String result) {
+
+    }
+
+    @Override
+    public void handleGetUserResult(User user) {
+
+    }
+
+    @Override
+    public void handleGetAllUsersResult(List<User> users) {
+
+    }
+
+    @Override
+    public void handleGetUsernamesResult(List<String> usernames) {
+
+    }
+
+    @Override
+    public void handleGetUserByUserName(User user) {
+
+        //set current points of the user
+
+        currentUser = user;
+        currentPoints = currentUser.getPoints();
+
+
+    }
+
+    private void checkForLocks(final CategoryViewHolder holder, final int position) {
+
+
+    }
+
+    @Override
+    public void handleInsertPoints(String result) {
+
     }
 
     //Creating viewholder
@@ -78,9 +123,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         holder.mCategoryName.setText(currentCategory.getStrCategory());
         String imageUrl = currentCategory.getStrCategoryThumb();
 
-        //get points of user
-        User currentUser = AppDatabase.getInstance(holder.mCategoryName.getContext()).userDao().getUserByUsername(username);
-        final int currentPoints = currentUser.getPoints();
+        //get points of user for unlock system
+        AppDatabase db = AppDatabase.getInstance(holder.mCategoryName.getContext());
+        GetUserByUsernameAsyncTask getUserByUsernameAsyncTask = new GetUserByUsernameAsyncTask();
+        getUserByUsernameAsyncTask.setDatabase(db);
+        getUserByUsernameAsyncTask.setDelegate(CategoryAdapter.this);
+        getUserByUsernameAsyncTask.execute(username);
 
         //if user has less than 5 points, then set goat as locked
         if (currentPoints <5 && currentCategory.getStrCategory().contentEquals("Goat")) {
@@ -89,7 +137,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             Glide.with(holder.mCategoryName.getContext()).load(imageUrl).into(holder.mCategoryImage);
 
         }
-
 
 
         //Clicking will transition to another fragment.
@@ -168,4 +215,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
         }
     };
+
+
 }

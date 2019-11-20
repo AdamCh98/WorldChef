@@ -99,9 +99,10 @@ public class SplashScreenActivity extends AppCompatActivity implements AsyncTask
     }
 
     @Override
-    public void handleGetCategoryByIdTask(Categories.Category category) {
+    public void handleGetCategoryByNameTask(Categories.Category category) {
 
     }
+
 
     @Override
     public void handleInsertCategoryListTask(String result) {

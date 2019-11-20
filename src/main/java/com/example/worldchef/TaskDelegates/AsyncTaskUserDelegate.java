@@ -11,4 +11,5 @@ public interface AsyncTaskUserDelegate {
     void handleGetAllUsersResult(List<User> users);
     void handleGetUsernamesResult(List<String> usernames);
     void handleGetUserByUserName(User user);
+    void handleInsertPoints(String result);
 }

@@ -94,6 +94,10 @@ public class SocialFragment extends Fragment implements AsyncTaskUserDelegate {
     public void handleGetUsernamesResult(List<String> usernames) {
 
     }
+    @Override
+    public void handleInsertPoints(String result) {
+
+    }
 
     @Override
     public void handleGetUserByUserName(User user) {

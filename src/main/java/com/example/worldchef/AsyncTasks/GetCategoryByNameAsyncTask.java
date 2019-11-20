@@ -4,11 +4,9 @@ import android.os.AsyncTask;
 
 import com.example.worldchef.AppDatabase;
 import com.example.worldchef.Models.Categories;
-import com.example.worldchef.Models.User;
 import com.example.worldchef.TaskDelegates.AsyncTaskCategoryDelegate;
-import com.example.worldchef.TaskDelegates.AsyncTaskUserDelegate;
 
-public class GetCategoryByIdAsyncTask extends AsyncTask<Integer, Integer, Categories.Category> {
+public class GetCategoryByNameAsyncTask extends AsyncTask<String, Integer, Categories.Category> {
 
     private AsyncTaskCategoryDelegate delegate;
 
@@ -28,13 +26,13 @@ public class GetCategoryByIdAsyncTask extends AsyncTask<Integer, Integer, Catego
     }
 
     @Override
-    protected Categories.Category doInBackground(Integer...ints) {
-        return db.categoryDao().getCategoryById(ints[0]);
+    protected Categories.Category doInBackground(String...strings) {
+        return db.categoryDao().getCategoryByName(strings[0]);
 
     }
 
     @Override
     protected void onPostExecute(Categories.Category result) {
-        delegate.handleGetCategoryByIdTask(result);
+        delegate.handleGetCategoryByNameTask(result);
     }
 }
