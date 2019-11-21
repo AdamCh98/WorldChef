@@ -62,7 +62,7 @@ public class MealFragment extends Fragment implements AsyncTaskCategoryDelegate,
         mealAdapter = new MealAdapter();
 
         mealSearchView = view.findViewById(R.id.meal_sv);
-        mCardView = view.findViewById(R.id.meal_cardview);
+        //mCardView = view.findViewById(R.id.meal_cardview);
         mCategoryImage = view.findViewById(R.id.categorydetail_cardimage);
         mCategoryName = view.findViewById(R.id.categorydetail_name);
         mealSearchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
